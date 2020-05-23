@@ -1,0 +1,85 @@
+import QtQuick 2.12
+import QtQuick.Window 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
+
+// import client.h 1.0
+Page {
+    id: pageLogin
+
+    property alias backGroundColor: backGroundRect.color
+    background: Rectangle {
+        id: backGroundRect
+    }
+
+    Keys.onEscapePressed: {
+        popPage();
+    }
+
+    ColumnLayout {
+        id:loGeneral
+        anchors.fill: parent
+        anchors.margins: defMargin
+        spacing: defMargin
+
+        ColumnLayout {
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            Layout.minimumWidth: 200
+            Layout.minimumHeight: 200
+            Label {
+                text: "Welcome to Application"
+                font.pointSize: 14
+                font.bold: true
+                color: textColor
+            }
+            Item {
+                height: 20
+            }
+            Label {
+                text: "Username"
+            }
+            TextField {
+                placeholderText: "Enter username"
+                selectByMouse: true
+                Layout.fillWidth: true
+            }
+            Label {
+                text: "Password"
+            }
+            TextField {
+                selectByMouse: true
+                echoMode: TextInput.Password
+                placeholderText: "Enter Password"
+                Layout.fillWidth: true
+            }
+            Item {
+                Layout.fillHeight: true;
+            }
+        }
+
+        RowLayout {
+            MainButton {
+                width: 135
+                id: regisButton
+                buttonText: "Registration"
+                onButtonClicked: {
+                    mainStackView.push(regisPage)
+                }
+            }
+
+            Item {
+                Layout.fillWidth: true
+            }
+
+            MainButton {
+                id: loginButton
+                buttonText: "Login"
+                onButtonClicked: {
+                    mainStackView.push(usersPage)
+                }
+            }
+        }
+    }
+}
+

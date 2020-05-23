@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>MessageWritingArea.qml</file>
+        <file>ItemMessege.qml</file>
+        <file>UserBar.qml</file>
+        <file>PageMesseges.qml</file>
+        <file>PageLogin.qml</file>
+        <file>MainButton.qml</file>
+        <file>PageUsers.qml</file>
+        <file>ItemUser.qml</file>
+        <file>PageRegistration.qml</file>
+    </qresource>
+</RCC>
