@@ -23,6 +23,8 @@
                 break;
             }
             m_lastMesseges.push_back(m_recvBuff, strlen( (char*) m_recvBuff)));
+            
+            sleep(1);
         }
     }
 

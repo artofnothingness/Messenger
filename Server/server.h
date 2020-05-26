@@ -16,48 +16,50 @@
 
 #include <QVariant>
 #include <QObject>
+#include <QDateTime>
 
 #include "dbconnection.h"
+#include "DataStructures.h"
 
 using namespace std;
 
-#define MAX_USERS 1000
-
-struct UserInfo {
-    QString loginName;
-    char *buffer;
-};
-
-typedef std::map<int, UserInfo>::iterator UserInfoIt;
-
 
 class Server : public DBConnection  {
-
 public:
-    explicit Server( int PORT, string ADDR, int BUFLEN,
+    explicit Server(
+           int PORT, string ADDR, int BUFLEN,
            QString clientTable, QString loginRow, QString passwordRow);
-
     ~Server();
-    bool establishConnection();
-    void startListening();
 
-    void listenClientThread(int fd);
-    static UserInfoIt findUserByValue(UserInfoIt begin, UserInfoIt end, char *value);
+    bool openSocket(); // OK
+    void startServer(); // OK
+    void startListenRequests(int fd); // NOT DONE
 
-    //Query based
-    bool login(QString login, QString password);
-    bool registrate(QString login, QString password);
-    bool drop(QString login);
-    vector<QString> getOnlineUsers();
+    // REQUESTS
+    bool loginRequestHandler(int fd , QSqlDatabase &connection); // TESTING LOGIN
+    bool sendMessegeRequestHandler(int fd, QSqlDatabase &connection); // NOT DONE
 
-    map <int, UserInfo> m_connectedUsers;
-private:
-    struct sockaddr_in m_serverInfo;
-    int m_FD;
-    uint32_t m_bufLen;
-    QString m_clientTableName;
-    QString m_loginRowName;
-    QString m_passwordRowName;
+
+    // DATABASE
+    QSqlDatabase    openDb(); // OK
+    vector<Messege> getLastMessegesDb(QString fromUserName, QString toUserName,
+                                      QSqlDatabase &connection); // TESTING
+    bool            insertMessegeDb(QString messege, QString fromUserName,
+                                    QString toUserName, QSqlDatabase &connection); // OK CAN BE MOD
+    bool            login(QString login, QString password, QSqlDatabase &connection); //OK
+    bool            registrate(QString login, QString password, QSqlDatabase &connection); //OK
+    bool            drop(QString login, QSqlDatabase &connection); //OK
+
+    static UserLoginBufferIt findUser(UserLoginBufferIt begin, UserLoginBufferIt end, char *value); //OK
+
+    int                 m_FD;
+    int                 m_bufLen;
+    bool                m_interupListening;
+    map <int, UserLoginBuffer> m_connectedUsers;
+    struct sockaddr_in  m_serverInfo;
+    QString             m_clientTableName;
+    QString             m_loginRowName;
+    QString             m_passwordRowName;
 };
 
 #endif // SERVER_H

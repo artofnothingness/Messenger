@@ -158,18 +158,18 @@ bool Server::sendMessegeRequestHandler(int fd, QSqlDatabase &connection)
         bytes_send = recv(fd, _text , m_bufLen, 0);
         if (bytes_recv <= 0)
             return status;
-
-        if (findUser(m_connectedUsers.begin(),
-                     m_connectedUsers.end(),
-                     _userTo) != m_connectedUsers.end()) {
-        }
-
-        bytes_send = send(m_serverFD, &_date, sizeof(_date), 0);
+       
+        UserLoginBufferIt userIt = findUser(m_connectedUsers.begin(),
+                                            m_connectedUsers.end(),
+                                            _userTo);
+        
+        if (userIt != m_connectedUsers.end()) {
+        bytes_send = send(userIt->first, &_date, sizeof(_date), 0);
         if (bytes_recv <= 0)
             return status;
-
         bytes_recv = recv(m_serverFD, &status, sizeof(bool), 0);
 
+        }
         return status;
 }
 

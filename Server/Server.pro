@@ -27,5 +27,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    DataStructures.h \
     dbconnection.h \
     server.h \

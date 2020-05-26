@@ -1,15 +1,15 @@
 QT -= gui
 QT += sql
 
-CONFIG += c++11 console
+CONFIG += qt console warn_on depend_includepath testcase
 CONFIG -= app_bundle
 QT += testlib
 
+TEMPLATE = app
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
-DEFINES += QT_DEPRECATED_WARNINGS
 
 # You can also make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -19,16 +19,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         ../Server/dbconnection.cpp \
         ../Server/server.cpp \
+        ../Client/client.cpp \
+        clienttests.cpp \
         main.cpp \
-        tests.cpp
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+        servertests.cpp
 
 HEADERS += \
     ../Server/dbconnection.h \
     ../Server/server.h \
-    tests.h \
+    ../Client/client.h \
+    clienttests.h \
+    servertests.h \
 

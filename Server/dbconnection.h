@@ -15,14 +15,13 @@ public:
                          QString userName,
                          QString password);
 
+public:
+QSqlDatabase m_DB;
+QString m_hostName;
+QString m_dataBaseName;
+QString m_userName;
+QString m_password;
 
-
-private:
-    QSqlDatabase m_DB;
-    QString m_hostName;
-    QString m_dataBaseName;
-    QString m_userName;
-    QString m_password;
 };
 
 #endif // DBCONNECTION_H
